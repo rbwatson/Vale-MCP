@@ -27,6 +27,30 @@ This MCP server provides AI assistants with the ability to check files for style
 
 ## Installation
 
+### Using npx (no install required)
+
+You can run Vale MCP directly using `npx` without installing it globally:
+
+```bash
+npx vale-mcp@latest
+```
+
+This is the recommended approach for most users and is what the quick install badges above use.
+
+### Global install via npm
+
+Install the `vale-mcp` package globally to create a system-wide `vale-cli` command:
+
+```bash
+npm install -g vale-mcp
+```
+
+To uninstall:
+
+```bash
+npm uninstall -g vale-mcp
+```
+
 ### Build from source
 
 ```bash
@@ -69,6 +93,19 @@ Add the Vale MCP server to your Claude Desktop configuration file:
 {
   "mcpServers": {
     "vale": {
+      "command": "npx",
+      "args": ["vale-mcp@latest"]
+    }
+  }
+}
+```
+
+**Using global install:**
+
+```json
+{
+  "mcpServers": {
+    "vale": {
       "command": "vale-cli",
       "args": []
     }
@@ -82,8 +119,8 @@ For debug mode:
 {
   "mcpServers": {
     "vale": {
-      "command": "vale-cli",
-      "args": ["--debug"]
+      "command": "npx",
+      "args": ["vale-mcp@latest", "--debug"]
     }
   }
 }
@@ -104,8 +141,9 @@ You can also add the Vale MCP server to VS Code manually:
 3. Provide server information:
    - **Name:** `vale` (or any name you prefer)
    - **Type:** Select `stdio`
-   - **Command:** `vale-cli` (if installed globally) or `node`
+   - **Command:** `npx` (recommended, no install needed), `vale-cli` (if installed globally), or `node`
    - **Arguments:**
+     - If using `npx`: Add `vale-mcp@latest`
      - If using `vale-cli`: Leave empty or add `--debug`
      - If using `node`: Add the path like `/Users/fabri/repos/FrankenMCP/Vale-MCP/build/index.js`
 4. Choose scope: User configuration (global) or Workspace (project-specific)
@@ -113,6 +151,19 @@ You can also add the Vale MCP server to VS Code manually:
 #### Option B: Manual configuration
 
 Add to your VS Code settings file:
+
+**Using npx (no install needed):**
+
+```json
+{
+  "github.copilot.chat.mcp.servers": {
+    "vale": {
+      "command": "npx",
+      "args": ["vale-mcp@latest"]
+    }
+  }
+}
+```
 
 **Using global install:**
 
@@ -146,8 +197,8 @@ Add to your VS Code settings file:
 {
   "github.copilot.chat.mcp.servers": {
     "vale": {
-      "command": "vale-cli",
-      "args": ["--debug"]
+      "command": "npx",
+      "args": ["vale-mcp@latest", "--debug"]
     }
   }
 }
@@ -164,6 +215,19 @@ Add to your VS Code settings file:
 [<img src="https://cursor.com/deeplink/mcp-install-dark.svg" alt="Install in Cursor">](https://cursor.com/install-mcp?name=Vale&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyJ2YWxlLW1jcEBsYXRlc3QiXX0=)
 
 You can also add the Vale MCP server manually (follow [Cursor's MCP documentation](https://docs.cursor.com/advanced/model-context-protocol)):
+
+**Using npx (no install needed):**
+
+```json
+{
+  "mcpServers": {
+    "vale": {
+      "command": "npx",
+      "args": ["vale-mcp@latest"]
+    }
+  }
+}
+```
 
 **Using global install:**
 
@@ -198,7 +262,8 @@ You can specify a Vale configuration file using the `VALE_CONFIG_PATH` environme
 {
   "mcpServers": {
     "vale": {
-      "command": "vale-cli",
+      "command": "npx",
+      "args": ["vale-mcp@latest"],
       "env": {
         "VALE_CONFIG_PATH": "/path/to/your/.vale.ini"
       }
