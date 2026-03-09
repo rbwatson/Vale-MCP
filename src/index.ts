@@ -257,6 +257,10 @@ const TOOLS: Tool[] = [
           type: "string",
           description: "The text content to check with Vale",
         },
+        text_file_ext: {
+          type: "string",
+          description: "Optional file extension for Vale to apply when checking the text (e.g., '.md', '.txt'). This can help Vale apply file format-specific rules if needed.",
+        },
         config_path: {
           type: "string",
           description: "Optional path to .vale.ini file. If not provided, uses the server's configured path or searches in the current directory.",
@@ -412,9 +416,9 @@ See Vale documentation: https://vale.sh/docs/topics/packages/`,
       }
 
       case "check_text": {
-        const { text, config_path } = args as { text: string; config_path?: string };
+        const { text, text_file_ext, config_path } = args as { text: string; text_file_ext?: string; config_path?: string };
 
-        debug(`check_text called - text length: ${text?.length}, config_path: ${config_path}`);
+        debug(`check_text called - text length: ${text?.length}, text_file_ext: ${text_file_ext}, config_path: ${config_path}`);
 
         if (!text) {
           return {
@@ -439,7 +443,7 @@ See Vale documentation: https://vale.sh/docs/topics/packages/`,
         // otherwise fall back to the server's configured path since there's no file directory to search from
         const effectiveConfigPath = config_path !== undefined ? config_path : valeConfigPath;
 
-        const result = await checkText(text, effectiveConfigPath);
+        const result = await checkText(text, text_file_ext, effectiveConfigPath);
 
         debug(`check_text result - issues found: ${result.issues.length}, errors: ${result.summary.errors}, warnings: ${result.summary.warnings}, suggestions: ${result.summary.suggestions}`);
 

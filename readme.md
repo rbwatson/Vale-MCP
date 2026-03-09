@@ -284,7 +284,7 @@ Once configured, you can ask your AI assistant to:
 
 ## Available tools
 
-The server provides three MCP tools:
+The server provides four MCP tools:
 
 ### `vale_status`
 
@@ -342,6 +342,29 @@ Lint a file at a specific path against Vale style rules.
 **Example usage in AI:**
 
 > "Check the README.md file for style issues"
+
+### `check_text`
+
+Lint AI-generated text against Vale style rules before it's written to a file or artifact.
+
+**Parameters:**
+
+- `text` (required): The text content to check with Vale
+- `text_file_ext` (optional): The file extension to apply to the text.
+    Used as the value to Vale's `--ext` argument.
+    If not specified, the `--ext` argument is not used.
+    The format for this value is an optional leading dot followed by letters and digits,
+    such as: "md", ".md", "txt", ".txt", or "docx"
+- `config_path` (optional): The path to the config file to use.
+    If not specified, the server's configured path is used.
+
+**Returns:**
+
+- A JSON object containing Vale's evaluation results.
+
+**Example usage in AI:**
+
+> "Check this text for style issues"
 
 ## Command-line options
 
